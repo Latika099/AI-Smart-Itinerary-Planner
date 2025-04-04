@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Smart Itinerary Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-2xl p-6">
+    <h1 class="text-2xl font-bold text-center text-indigo-600 mb-4">🌍 AI Smart Itinerary Planner</h1>
+    
+    <div id="chatBox" class="h-96 overflow-y-auto space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+      <!-- Messages will appear here -->
+    </div>
+
+    <form id="chatForm" class="flex mt-4 gap-2">
+      <input 
+        id="userInput" 
+        type="text" 
+        placeholder="Ask about your trip (e.g., 3-day trip to Paris)" 
+        class="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        required
+      >
+      <button 
+        type="submit" 
+        class="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700 transition"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const chatForm = document.getElementById('chatForm');
+    const userInput = document.getElementById('userInput');
+    const chatBox = document.getElementById('chatBox');
+
+    function addMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.className = sender === 'user' ? 'text-right' : 'text-left';
+      msg.innerHTML = `
+        <div class="inline-block px-4 py-2 rounded-xl ${sender === 'user' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-800'}">
+          ${text}
+        </div>
+      `;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function getAIResponse(query) {
+  query = query.toLowerCase();
+
+  if (query.includes('paris')) {
+    return `🇫🇷 3-day Paris Itinerary:
+- Day 1: Eiffel Tower, Seine River Cruise, Louvre Museum
+- Day 2: Montmartre, Sacré-Cœur, Local Café Hopping
+- Day 3: Versailles Day Trip, Champs-Élysées Shopping`;
+  } 
+  else if (query.includes('tokyo')) {
+    return `🇯🇵 3-day Tokyo Itinerary:
+- Day 1: Shibuya, Harajuku, Meiji Shrine
+- Day 2: Asakusa Temple, Tokyo Skytree, Ueno Park
+- Day 3: Akihabara, Tsukiji Market, Odaiba`;
+  }
+  else if (query.includes('new york')) {
+    return `🗽 3-day New York City Plan:
+- Day 1: Times Square, Broadway, Central Park
+- Day 2: Statue of Liberty, 9/11 Memorial, Brooklyn Bridge
+- Day 3: Empire State, MoMA, Soho`;
+  }
+  else if (query.includes('rome')) {
+    return `🇮🇹 3-day Rome Trip:
+- Day 1: Colosseum, Roman Forum, Trevi Fountain
+- Day 2: Vatican City, Sistine Chapel, St. Peter’s Basilica
+- Day 3: Piazza Navona, Pantheon, Trastevere`;
+  }
+  else if (query.includes('london')) {
+    return `🇬🇧 3-day London Getaway:
+- Day 1: Big Ben, London Eye, Westminster Abbey
+- Day 2: Tower of London, Tower Bridge, Borough Market
+- Day 3: British Museum, Camden Market, Hyde Park`;
+  }
+  else if (query.includes('bali')) {
+    return `🌴 3-day Bali Adventure:
+- Day 1: Ubud Rice Terraces, Monkey Forest
+- Day 2: Tanah Lot Temple, Seminyak Beach
+- Day 3: Mount Batur Sunrise Hike, Hot Springs`;
+  }
+  else if (query.includes('sydney')) {
+    return `🇦🇺 3-day Sydney Trip:
+- Day 1: Sydney Opera House, Circular Quay
+- Day 2: Bondi Beach, Coastal Walk, Taronga Zoo
+- Day 3: Blue Mountains Day Trip`;
+  }
+  else if (query.includes('dubai')) {
+    return `🇦🇪 3-day Dubai Journey:
+- Day 1: Burj Khalifa, Dubai Mall, Fountain Show
+- Day 2: Desert Safari, Camel Ride, BBQ Dinner
+- Day 3: Palm Jumeirah, Marina Walk, Global Village`;
+  }
+  else if (query.includes('singapore')) {
+    return `🇸🇬 3-day Singapore Itinerary:
+- Day 1: Marina Bay Sands, Gardens by the Bay
+- Day 2: Sentosa Island, Universal Studios
+- Day 3: Chinatown, Orchard Road, Clarke Quay`;
+  }
+  else if (query.includes('bangkok')) {
+    return `🇹🇭 3-day Bangkok Plan:
+- Day 1: Grand Palace, Wat Pho, Chao Phraya River Cruise
+- Day 2: Chatuchak Market, Siam Paragon, Jim Thompson House
+- Day 3: Floating Market, Asiatique, Street Food Tour`;
+  }
+  else {
+    return `🌐 Sorry, I don't have an itinerary for that location yet. Try asking about Paris, Tokyo, New York, Rome, London, Bali, Sydney, Dubai, Singapore, or Bangkok.`;
+  }
+}
+
+
+    chatForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const userText = userInput.value;
+      addMessage(userText, 'user');
+      const botReply = getAIResponse(userText);
+      setTimeout(() => addMessage(botReply, 'bot'), 500);
+      userInput.value = '';
+    });
+  </script>
+
+</body>
+</html>
